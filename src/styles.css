@@ -19,15 +19,16 @@
 }
 
 :root {
-  --background: oklch(0.985 0.005 30);
-  --foreground: oklch(0.18 0.01 30);
-  --muted: oklch(0.95 0.008 30);
-  --muted-foreground: oklch(0.45 0.015 30);
-  --accent: oklch(0.72 0.14 18);
-  --accent-foreground: oklch(0.98 0 0);
-  --border: oklch(0.88 0.01 30);
-  --primary: oklch(0.18 0.01 30);
-  --primary-foreground: oklch(0.98 0 0);
+  /* Warm cream paper background, deep cocoa text — editorial, lucindababi-inspired */
+  --background: oklch(0.965 0.018 75);
+  --foreground: oklch(0.28 0.035 50);
+  --muted: oklch(0.93 0.02 70);
+  --muted-foreground: oklch(0.48 0.03 55);
+  --accent: oklch(0.55 0.13 45);
+  --accent-foreground: oklch(0.98 0.01 80);
+  --border: oklch(0.86 0.025 65);
+  --primary: oklch(0.28 0.035 50);
+  --primary-foreground: oklch(0.98 0.01 80);
 }
 
 @layer base {

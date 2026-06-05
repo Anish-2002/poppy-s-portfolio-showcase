@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PressRouteImport } from './routes/press'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ArchiveRouteImport } from './routes/archive'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const PressRoute = PressRouteImport.update({
@@ -30,11 +29,6 @@ const ArchiveRoute = ArchiveRouteImport.update({
   path: '/archive',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,14 +37,12 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/archive': typeof ArchiveRoute
   '/contact': typeof ContactRoute
   '/press': typeof PressRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/archive': typeof ArchiveRoute
   '/contact': typeof ContactRoute
   '/press': typeof PressRoute
@@ -58,22 +50,20 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/archive': typeof ArchiveRoute
   '/contact': typeof ContactRoute
   '/press': typeof PressRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/archive' | '/contact' | '/press'
+  fullPaths: '/' | '/archive' | '/contact' | '/press'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/archive' | '/contact' | '/press'
-  id: '__root__' | '/' | '/about' | '/archive' | '/contact' | '/press'
+  to: '/' | '/archive' | '/contact' | '/press'
+  id: '__root__' | '/' | '/archive' | '/contact' | '/press'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
   ArchiveRoute: typeof ArchiveRoute
   ContactRoute: typeof ContactRoute
   PressRoute: typeof PressRoute
@@ -102,13 +92,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArchiveRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -121,7 +104,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
   ArchiveRoute: ArchiveRoute,
   ContactRoute: ContactRoute,
   PressRoute: PressRoute,
