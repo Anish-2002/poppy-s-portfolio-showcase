@@ -2,11 +2,10 @@ import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
 const nav = [
-  { to: "/", label: "Index" },
-  { to: "/archive", label: "Archive" },
-  { to: "/about", label: "About" },
-  { to: "/press", label: "Press" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "shop" },
+  { to: "/archive", label: "collections" },
+  { to: "/press", label: "press" },
+  { to: "/contact", label: "info" },
 ] as const;
 
 export function SiteLayout({ children }: { children?: ReactNode }) {
