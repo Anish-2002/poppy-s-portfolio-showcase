@@ -60,15 +60,12 @@ function Index() {
           and quiet campaign work.
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.28em]">
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs lowercase tracking-[0.2em]">
           <Link to="/archive" className="border-b border-accent pb-1 text-accent hover:opacity-80">
-            View Campaign Shoot
+            view campaign shoot
           </Link>
           <Link to="/archive" className="border-b border-background/60 pb-1 hover:text-accent">
-            View All
-          </Link>
-          <Link to="/about" className="border-b border-background/60 pb-1 hover:text-accent">
-            The Story
+            view all
           </Link>
         </div>
 
