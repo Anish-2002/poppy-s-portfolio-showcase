@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { images } from "@/lib/poppy-images";
 
@@ -5,8 +6,8 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Poppy — Studio of wearable form" },
-      { name: "description", content: "Poppy is a Melbourne-based studio exploring sculptural garments, soft tailoring and quiet campaign work." },
-      { property: "og:title", content: "Poppy — Studio of wearable form" },
+      { name: "description", content: "Poppy — a Naarm/Melbourne studio of sculptural garments and quiet campaign work." },
+      { property: "og:title", content: "Poppy" },
       { property: "og:description", content: "Sculptural garments and campaign work from Melbourne." },
       { property: "og:image", content: images.p2 },
     ],
@@ -14,80 +15,74 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const slides = [images.p2, images.p1, images.p3, images.p5, images.p4];
+
 function Index() {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setI((p) => (p + 1) % slides.length), 4200);
+    return () => clearInterval(t);
+  }, []);
+
   return (
-    <div>
-      {/* Hero */}
-      <section className="px-6 md:px-12 pt-16 md:pt-24 pb-20 md:pb-32 grid md:grid-cols-12 gap-10 md:gap-16 items-end">
-        <div className="md:col-span-6 space-y-8">
-          <p className="uppercase text-xs tracking-[0.3em] text-muted-foreground">Campaign 01 — Of soft architecture</p>
-          <h1 className="serif text-5xl md:text-7xl leading-[1.05]">
-            Garments that hold<br />
-            <span className="italic text-accent">a quiet weight.</span>
-          </h1>
-          <p className="text-base md:text-lg text-muted-foreground max-w-md leading-relaxed">
-            Poppy is a studio practice from Naarm/Melbourne. We work between sculpture and dress —
-            building pieces that drape, fold and remember the body.
-          </p>
-          <div className="flex gap-6 pt-2 text-sm uppercase tracking-[0.18em]">
-            <Link to="/archive" className="border-b border-accent pb-1 text-accent hover:opacity-70">View Collection</Link>
-            <Link to="/about" className="border-b border-border pb-1 hover:text-accent">The Story</Link>
-          </div>
-        </div>
-        <div className="md:col-span-6">
-          <img src={images.p2} alt="Poppy campaign — sculptural white garment in garden setting" className="w-full h-[60vh] md:h-[80vh] object-cover" />
-        </div>
-      </section>
+    <section className="relative h-[calc(100vh-7rem)] min-h-[560px] w-full overflow-hidden bg-foreground">
+      {/* Slideshow */}
+      <div className="absolute inset-0">
+        {slides.map((src, idx) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            aria-hidden={idx !== i}
+            className="absolute inset-0 h-full w-full object-cover transition-opacity duration-[1800ms] ease-in-out will-change-[opacity,transform]"
+            style={{
+              opacity: idx === i ? 1 : 0,
+              transform: idx === i ? "scale(1.06)" : "scale(1)",
+              transitionProperty: "opacity, transform",
+              transitionDuration: "1800ms, 7000ms",
+            }}
+          />
+        ))}
+        {/* subtle vignette so text remains legible */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
+      </div>
 
-      {/* Featured pair */}
-      <section className="px-6 md:px-12 grid md:grid-cols-2 gap-10 md:gap-20 pb-24 md:pb-40">
-        <figure className="space-y-4">
-          <img src={images.p1} alt="Side profile, draped piece with branch detailing" className="w-full aspect-[4/5] object-cover" />
-          <figcaption className="text-sm text-muted-foreground italic">No. 01 — The Cloak, hand-painted cotton & tulle.</figcaption>
-        </figure>
-        <figure className="space-y-4 md:mt-32">
-          <img src={images.p4} alt="Reclining on grass with sculptural drape" className="w-full aspect-[4/5] object-cover" />
-          <figcaption className="text-sm text-muted-foreground italic">No. 02 — Resting form, with branch armature.</figcaption>
-        </figure>
-      </section>
+      {/* Overlay copy */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-end px-6 pb-14 text-center text-background md:pb-20">
+        <p className="uppercase text-[10px] md:text-xs tracking-[0.4em] opacity-80 mb-5">
+          Campaign 01 — Of soft architecture
+        </p>
+        <h1 className="serif text-5xl md:text-7xl leading-[1.02] max-w-3xl">
+          Poppy<span className="text-accent">.</span>
+        </h1>
+        <p className="mt-5 max-w-md text-sm md:text-base opacity-85 leading-relaxed">
+          A Naarm / Melbourne studio of wearable form — sculptural garments, hand-painted cloth,
+          and quiet campaign work.
+        </p>
 
-      {/* Story strip */}
-      <section className="px-6 md:px-12 py-24 md:py-32 border-y border-border bg-muted/40">
-        <div className="grid md:grid-cols-12 gap-10">
-          <div className="md:col-span-3">
-            <p className="uppercase text-xs tracking-[0.3em] text-muted-foreground">A note</p>
-          </div>
-          <div className="md:col-span-7 md:col-start-5">
-            <p className="serif text-2xl md:text-4xl leading-snug">
-              Each piece begins as a question about the body — what does it want to carry,
-              and what does it want to let fall? Poppy is the slow answer.
-            </p>
-            <Link to="/about" className="inline-block mt-10 text-sm uppercase tracking-[0.18em] border-b border-accent pb-1 text-accent">
-              Read the story
-            </Link>
-          </div>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.28em]">
+          <Link to="/archive" className="border-b border-accent pb-1 text-accent hover:opacity-80">
+            View Campaign Shoot
+          </Link>
+          <Link to="/archive" className="border-b border-background/60 pb-1 hover:text-accent">
+            View All
+          </Link>
+          <Link to="/about" className="border-b border-background/60 pb-1 hover:text-accent">
+            The Story
+          </Link>
         </div>
-      </section>
 
-      {/* Full bleed */}
-      <section className="px-6 md:px-12 py-24 md:py-32">
-        <img src={images.p3} alt="Full-length apron-style garment with painted train" className="w-full h-[70vh] md:h-[90vh] object-cover" />
-        <div className="grid md:grid-cols-12 mt-8">
-          <div className="md:col-span-6 md:col-start-4 text-center md:text-left">
-            <p className="text-sm text-muted-foreground italic">
-              Campaign imagery, Autumn — photographed in the studio garden.
-            </p>
-          </div>
+        {/* slide indicators */}
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2">
+          {slides.map((_, idx) => (
+            <span
+              key={idx}
+              className="h-[2px] w-6 transition-opacity"
+              style={{ background: idx === i ? "var(--accent)" : "rgba(255,255,255,0.4)" }}
+            />
+          ))}
         </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-6 md:px-12 pt-12 pb-8 text-center">
-        <h2 className="serif text-3xl md:text-5xl">Explore the full archive</h2>
-        <Link to="/archive" className="inline-block mt-8 text-sm uppercase tracking-[0.18em] border border-foreground px-8 py-3 hover:bg-foreground hover:text-background transition">
-          Enter Archive
-        </Link>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
